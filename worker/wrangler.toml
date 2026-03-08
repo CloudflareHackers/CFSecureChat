@@ -20,10 +20,10 @@ bindings = [
   { name = "CHAT_ROOM", class_name = "ChatRoom" }
 ]
 
-# Durable Object migrations (required on first deploy)
+# Durable Object migrations — SQLite-backed storage (free + paid plans)
 [[migrations]]
 tag = "v1"
-new_classes = ["ChatRoom"]
+new_sqlite_classes = ["ChatRoom"]
 
 # ---------------------------------------------------------------------------
 # Environment variables (override per environment as needed)
