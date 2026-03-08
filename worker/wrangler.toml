@@ -1,0 +1,48 @@
+# ============================================================================
+# CloudflareSecureChat — Worker Configuration
+# ============================================================================
+# Signaling server for 1-on-1 secure text, audio & video communication.
+# Uses a Durable Object per room to manage WebSocket connections, SDP
+# exchange, ICE candidate relay, and real-time text chat.
+# ============================================================================
+
+name = "cloudflare-secure-chat"
+account_id = "d7fd792641c0f950e8e4979eac0cfe5a"
+main = "src/index.ts"
+compatibility_date = "2024-12-01"
+compatibility_flags = ["nodejs_compat"]
+
+# ---------------------------------------------------------------------------
+# Durable Object bindings
+# ---------------------------------------------------------------------------
+[durable_objects]
+bindings = [
+  { name = "CHAT_ROOM", class_name = "ChatRoom" }
+]
+
+# Durable Object migrations (required on first deploy)
+[[migrations]]
+tag = "v1"
+new_classes = ["ChatRoom"]
+
+# ---------------------------------------------------------------------------
+# Environment variables (override per environment as needed)
+# ---------------------------------------------------------------------------
+[vars]
+MAX_ROOM_SIZE = "2"                       # Strict 1-on-1
+ENVIRONMENT = "production"
+
+# ---------------------------------------------------------------------------
+# Development settings
+# ---------------------------------------------------------------------------
+[dev]
+port = 8787
+local_protocol = "https"
+
+# ---------------------------------------------------------------------------
+# Staging environment (optional)
+# ---------------------------------------------------------------------------
+# [env.staging]
+# name = "cloudflare-secure-chat-staging"
+# [env.staging.vars]
+# ENVIRONMENT = "staging"
